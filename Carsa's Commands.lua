@@ -1,4 +1,4 @@
-VERSION = 1.02
+VERSION = 1.01
 ABOUT = {
 	{title="Add-On Name:", text="Carsa's Commands"},
 	{title="Version:", text=VERSION},
@@ -75,33 +75,77 @@ GAME_SETTING_OPTIONS = {
 EQUIPMENT_SLOTS = {2, 3, 3, 3, 3, 1}
 
 EQUIPMENT_DATA = {
-	{name="diving suit", size=1},
-	{name="firefighter", size=1},
-	{name="scuba suit", size=1},
-	{name="parachute", size=1},
-	{name="parka", size=1},
-	{name="binoculars", size=3},
-	{name="cable", size=2},
-	{name="compass", size=3},
-	{name="defibrillator", size=2},
-	{name="fire extinguisher", size=2},
-	{name="first aid", size=3},
-	{name="flare", size=3},
-	{name="flaregun", size=3},
-	{name="flaregun ammo", size=3},
-	{name="flashlight", size=3},
-	{name="hose", size=2},
-	{name="night vision binoculars", size=3},
-	{name="oxygen mask", size=3},
-	{name="radio", size=3},
-	{name="radio signal locator", size=2},
-	{name="remote control", size=3},
-	{name="rope", size=2},
-	{name="strobe light", size=3},
-	{name="strobe light infrared", size=3},
-	{name="transponder", size=3},
-	{name="underwater welding torch", size=2},
-	{name="welding torch", size=2}
+	{name="diving suit", size=1}, -- 1
+	{name="firefighter", size=1}, -- 2
+	{name="scuba suit", size=1}, -- 3
+	{name="parachute", size=1}, -- 4
+	{name="parka", size=1}, -- 5
+	{name="binoculars", size=3}, -- 6
+	{name="cable", size=2}, -- 7
+	{name="compass", size=3}, -- 8
+	{name="defibrillator", size=2}, -- 9
+	{name="fire extinguisher", size=2}, -- 10
+	{name="first aid", size=3}, -- 11
+	{name="flare", size=3}, -- 12
+	{name="flaregun", size=3}, -- 13
+	{name="flaregun ammo", size=3}, -- 14
+	{name="flashlight", size=3}, -- 15
+	{name="hose", size=2}, -- 16
+	{name="night vision binoculars", size=3}, -- 17
+	{name="oxygen mask", size=3}, -- 18
+	{name="radio", size=3}, -- 19
+	{name="radio signal locator", size=2}, -- 20
+	{name="remote control", size=3}, -- 21
+	{name="rope", size=2}, -- 22
+	{name="strobe light", size=3}, -- 23
+	{name="strobe light infrared", size=3}, -- 24
+	{name="transponder", size=3}, -- 25
+	{name="underwater welding torch", size=2}, -- 26
+	{name="welding torch", size=2}, -- 27
+	{name="coal", size=2}, -- 28
+	{name="nothing", size=3}, -- 29
+	{name="radiation detector", size=3}, -- 30
+	{name="c4 explosive", size=3}, -- 31
+	{name="c4 detonator", size=3}, -- 32
+	{name="speargun", size=2}, -- 33
+	{name="speargun ammo", size=3}, -- 34
+	{name="pistol", size=2}, -- 35
+	{name="pistol ammo", size=3}, -- 36
+	{name="smg", size=2}, -- 37
+	{name="smg ammo", size=3}, -- 38
+	{name="rifle", size=2}, -- 39
+	{name="rifle ammo", size=3}, -- 40
+	{name="grenade", size=2}, -- 41
+	{name="machine gun ammo box (kinetic)", size=2}, -- 42
+	{name="machine gun ammo box (high explosive)", size=2}, -- 43
+	{name="machine gun ammo box (fragmentation)", size=2}, -- 44
+	{name="machine gun ammo box (amrmor piercing)", size=2}, -- 45
+	{name="machine gun ammo box (incendiary)", size=2}, -- 46
+	{name="light autocannon ammo (kinetic)", size=2}, -- 47
+	{name="light autocannon ammo (high explosive)", size=2}, -- 48
+	{name="light autocannon ammo (fragmentation)", size=2}, -- 49
+	{name="light autocannon ammo (amrmor piercing)", size=2}, -- 50
+	{name="light autocannon ammo (incendiary)", size=2}, -- 51
+	{name="rotary autocannon ammo (kinetic)", size=2}, -- 52
+	{name="rotary autocannon ammo (high explosive)", size=2}, -- 53
+	{name="rotary autocannon ammo (fragmentation)", size=2}, -- 54
+	{name="rotary autocannon ammo (amrmor piercing)", size=2}, -- 55
+	{name="rotary autocannon ammo (incendiary)", size=2}, -- 56
+	{name="heavy autocannon ammo (kinetic)", size=2}, -- 57
+	{name="heavy autocannon ammo (high explosive)", size=2}, -- 58
+	{name="heavy autocannon ammo (fragmentation)", size=2}, -- 59
+	{name="heavy autocannon ammo (amrmor piercing)", size=2}, -- 60
+	{name="heavy autocannon ammo (incendiary)", size=2}, -- 61
+	{name="battle cannon shell (kinetic)", size=2}, -- 62
+	{name="battle cannon shell (high explosive)", size=2}, -- 63
+	{name="battle cannon shell (fragmentation)", size=2}, -- 64
+	{name="battle cannon shell (amrmor piercing)", size=2}, -- 65
+	{name="battle cannon shell (incendiary)", size=2}, -- 66
+	{name="artillery cannon shell (kinetic)", size=2}, -- 67
+	{name="artillery cannon shell (high explosive)", size=2}, -- 68
+	{name="artillery cannon shell (fragmentation)", size=2}, -- 69
+	{name="artillery cannon shell (amrmor piercing)", size=2}, -- 70
+	{name="artillery cannon shell (incendiary)", size=2}, -- 71
 }
 
 function clamp(v,low,high)
@@ -1072,10 +1116,10 @@ function setStartingEquipment(...)
 			local equipment_id = toInteger(args[k])
 			if EQUIPMENT_DATA[equipment_id] then
 				local size = EQUIPMENT_DATA[equipment_id].size
-				if type(equipment_id) == "number" and (equipment_id > 0 and equipment_id <= 27) then
+				if type(equipment_id) == "number" and (equipment_id > 0 and equipment_id <= 71) then
 						table.insert(equipment, equipment_id)
 				else
-					invalidArgument(peer_id, k, "a number between 1 and 27.")
+					invalidArgument(peer_id, k, "a number between 1 and 71.")
 					return
 				end
 			else
